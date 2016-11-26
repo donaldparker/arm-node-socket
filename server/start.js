@@ -1,6 +1,13 @@
 var app = require('../app');
 var debug = require('debug')('arm-node-socket:server');
 var http = require('http');
+var SerialPort = require('serialport');
+var arduino = new SerialPort('/dev/ttyACM0', {
+  baudRate: 9600,
+  parser: SerialPort.parsers.readline('\n')
+}, function(){
+
+});
 
 
 var port = normalizePort(process.env.PORT || '3000');
@@ -24,6 +31,12 @@ ioBrowser.on('connection', function (socket) {
   });
 });
 
+arduino.on('data', function (data) {
+  console.log('Data: ' + data);
+  if(ioBrowser){
+    ioBrowser.emit('data', data);
+  }
+});
 
 function normalizePort(val) {
   var port = parseInt(val, 10);

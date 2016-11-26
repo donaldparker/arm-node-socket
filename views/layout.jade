@@ -15,6 +15,11 @@ html
           $('#m').val('');
           return false;
         });
+        socket.on('data', function(data){
+          if(data){
+            $(document).addClass('')
+          }
+        });
       });
   body
     block content
