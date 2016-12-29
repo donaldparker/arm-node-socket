@@ -3,7 +3,12 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  img#stream(src="")
   form
-    input(type="text", id="m", class="form-control")
-    button(class="btn btn-primary")
-      Send
+    div(class="form-group")
+      input(id="rotation", type="range", min="0", max="1023", class="form-control")
+    div(class="form-group")
+      input(id="tilt", type="range", min="0", max="1023", class="form-control")
+    div(class="form-group")
+      input(type="text", id="m", class="form-control")
+    button(class="btn btn-primary") Send

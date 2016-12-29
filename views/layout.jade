@@ -10,16 +10,31 @@ html
     script.
       var socket = io();
       $(function () {
+        // text test
         $('form').submit(function () {
-          socket.emit('chat message', $('#m').val());
+          socket.emit('chatMessage', $('#m').val().trim());
           $('#m').val('');
           return false;
         });
+        //logging
         socket.on('data', function(data){
           if(data){
-            $(document).addClass('')
+            $(document).addClass('');
           }
         });
+        socket.on('liveStream', function(url){
+         $('#stream').attr('src', url);
+        });
+
+        $('#rotation, #tilt').on('change', function(e){
+          console.log('pan', parseInt($('#rotation').val(), 10));
+          console.log('tilt', parseInt($('#tilt').val(), 10));
+          socket.emit('panTilt', {
+            pan: parseInt($('#rotation').val(), 10),
+            tilt: parseInt($('#tilt').val(), 10)
+          });
+        });
+        socket.emit('startStream');
       });
   body
     block content
